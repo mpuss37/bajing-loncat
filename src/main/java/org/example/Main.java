@@ -11,7 +11,7 @@ public class Main {
             query = String.valueOf(args[1]);
             amount = String.valueOf(args[2]);
             numberPage = String.valueOf(args[3]);
-            getDataResource.setApiUrl("elephant","1","1");
+            getDataResource.setApiUrl(query,amount,numberPage);
         }
     }
 }

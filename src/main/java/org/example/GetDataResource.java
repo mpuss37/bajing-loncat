@@ -13,7 +13,7 @@ public class GetDataResource {
     private HttpURLConnection httpURLConnection;
     private BufferedReader bufferedReader;
     private StringBuilder stringBuilder;
-    private JSONObject jsonObject;
+    private JSONObject jsonObjectObj1,jsonObjectObj2;
     private JSONArray jsonArray;
 
     void setApiUrl(String paramQuery, String parampAmount, String paramPageUrl) throws IOException {
@@ -29,17 +29,19 @@ public class GetDataResource {
         }
         bufferedReader.close();
         httpURLConnection.disconnect();
-        setJsonParsing(stringBuilder,"color");
-//        jsonObject = new JSONObject(stringBuilder.toString());
-//        jsonArray = jsonObject.getJSONArray("results");
-//        JSONObject firstMatch = jsonArray.getJSONObject(0);
+        setJsonParsing(stringBuilder,"color",0);
     }
 
-    void setJsonParsing(StringBuilder paramStringBuilder, String paramGetStringJson){
-        jsonObject = new JSONObject(paramStringBuilder.toString());
-        jsonArray = jsonObject.getJSONArray("results");
-        jsonObject = jsonArray.getJSONObject(0);
-        paramGetStringJson = jsonObject.getString("segment");
+    void setIndexValue(){
+
+    }
+
+    void setJsonParsing(StringBuilder paramStringBuilder, String paramGetStringJson, int paramIndexJson){
+        jsonObjectObj1 = new JSONObject(paramStringBuilder.toString());
+        jsonArray = jsonObjectObj1.getJSONArray("results");
+        jsonObjectObj1 = jsonArray.getJSONObject(paramIndexJson);
+        jsonObjectObj2 = jsonObjectObj1.getJSONObject("urls");
+        paramGetStringJson = jsonObjectObj2.getString("full");
         System.out.println(paramGetStringJson);
     }
 }
