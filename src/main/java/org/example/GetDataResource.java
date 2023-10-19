@@ -21,8 +21,11 @@ public class GetDataResource {
     void setApiUrl(String paramQuery, int parampAmount, String paramPageUrl) {
         try {
             String apiUrl = "https://unsplash.com/napi/search/photos?query=" + paramQuery + "&per_page=" + parampAmount + "&page=" + paramPageUrl;
+            //apiUrl (unsplash.com)
             url = new URL(apiUrl);
+            //object for url and set value apiUrl
             httpURLConnection = (HttpURLConnection) url.openConnection();
+            //connection
             httpURLConnection.setRequestMethod("GET");
             bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             stringBuilder = new StringBuilder();
@@ -51,7 +54,7 @@ public class GetDataResource {
     private void setWriteFile(String paramUrlImage, String paramNameImage, int paramNumberSubNameFile){
         try {
             url = new URL(paramUrlImage);
-            String namaFile = "/home/mpuss/Pictures/gajah/"+paramNameImage+paramNumberSubNameFile+".jpg";
+            String namaFile = "/home/mpuss/Pictures/gajah/"+paramNameImage+"-"+paramNumberSubNameFile+".jpg";
             try (InputStream in = new BufferedInputStream(url.openStream());
                  FileOutputStream fos = new FileOutputStream(namaFile)) {
                 byte[] buffer = new byte[1024];
