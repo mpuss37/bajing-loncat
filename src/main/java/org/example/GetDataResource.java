@@ -18,11 +18,43 @@ public class GetDataResource {
     private JSONObject jsonObjectObj1, jsonObjectObj2;
     private JSONArray jsonArray;
 
-    void setApiUrl(String paramQuery, int parampAmount, String paramPageUrl) {
+    private String apiUrl;
+
+    public String getApiUrl() {
+        return apiUrl;
+    }
+
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
+    }
+
+    void setApiUrl(String paramQuery, int parampAmount, String paramPageUrl, String paramOrientation, String paramColor, String paramOrderBy, int paramFeatureUrl) {
         try {
-            String apiUrl = "https://unsplash.com/napi/search/photos?query=" + paramQuery + "&per_page=" + parampAmount + "&page=" + paramPageUrl;
-            //apiUrl (unsplash.com)
-            url = new URL(apiUrl);
+            if (paramFeatureUrl == 1) {
+                //paramFeatureUrl (license all)
+                setApiUrl("https://unsplash.com/napi/search/photos?query=" + paramQuery + "&per_page=" + parampAmount + "&page=" + paramPageUrl);
+                url = new URL(getApiUrl());
+            } else if (paramFeatureUrl == 2) {
+                //paramFeatureUrl (license free)
+                setApiUrl("https://unsplash.com/napi/search/photos?query=" + paramQuery + "?license=free" + "&per_page=" + parampAmount + "&page=" + paramPageUrl);
+                url = new URL(getApiUrl());
+            } else if (paramFeatureUrl == 3) {
+                //paramFeatureUrl (for orientation)
+                setApiUrl("https://unsplash.com/napi/search/photos?query=" + paramQuery + "?orientation=" + paramOrientation + "&per_page=" + parampAmount + "&page=" + paramPageUrl);
+                url = new URL(getApiUrl());
+            } else if (paramFeatureUrl == 4) {
+                //paramFeatureUrl (for color)
+                setApiUrl("https://unsplash.com/napi/search/photos?query=" + paramQuery + "&color=" + paramColor + "&per_page=" + parampAmount + "&page=" + paramPageUrl);
+                url = new URL(getApiUrl());
+            } else if (paramFeatureUrl == 5) {
+                //paramFeatureUrl (for param OrderBy)
+                setApiUrl("https://unsplash.com/napi/search/photos?query=" + paramQuery + "?order_by=" + paramOrderBy + "&per_page=" + parampAmount + "&page=" + paramPageUrl);
+                url = new URL(getApiUrl());
+            } else if (paramFeatureUrl == 6) {
+                //paramFeatureUrl (for complete param)
+                setApiUrl("https://unsplash.com/napi/search/photos?query=" + paramQuery + "?order_by=" + paramOrderBy + "&color=" + paramColor + "&per_page=" + parampAmount + "&page=" + paramPageUrl);
+                url = new URL(getApiUrl());
+            }
             //object for url and set value apiUrl
             httpURLConnection = (HttpURLConnection) url.openConnection();
             //connection
@@ -35,7 +67,7 @@ public class GetDataResource {
             }
             bufferedReader.close();
             httpURLConnection.disconnect();
-            setValueAmountJson(paramQuery,parampAmount);
+            setValueAmountJson(paramQuery, parampAmount);
         } catch (IOException e) {
             System.out.println("check your connection");
         }
@@ -45,16 +77,16 @@ public class GetDataResource {
         //use for set value param page
         int j = 0;
         while (j <= (valueAmountJson - 1)) {
-            setJsonParsing(paramQuery,stringBuilder, j, "full");
+            setJsonParsing(paramQuery, stringBuilder, j, "full");
             j++;
         }
         return 0;
     }
 
-    private void setWriteFile(String paramUrlImage, String paramNameImage, int paramNumberSubNameFile){
+    private void setWriteFile(String paramUrlImage, String paramNameImage, int paramNumberSubNameFile) {
         try {
             url = new URL(paramUrlImage);
-            String namaFile = "/home/mpuss/Pictures/gajah/"+paramNameImage+"-"+paramNumberSubNameFile+".jpg";
+            String namaFile = "/home/mpuss/Pictures/gajah/" + paramNameImage + "-" + paramNumberSubNameFile + ".jpg";
             try (InputStream in = new BufferedInputStream(url.openStream());
                  FileOutputStream fos = new FileOutputStream(namaFile)) {
                 byte[] buffer = new byte[1024];
@@ -81,7 +113,7 @@ public class GetDataResource {
         //for getString obj2 with key : urls
         int numberSubNameImg = paramIndexJson + 1;
         //for set file name to add 'filename[number].jpg'
-        setWriteFile(variation,paramNameFileQuery,numberSubNameImg);
-        System.out.println(paramNameFileQuery+"Nomor " + numberSubNameImg);
+        setWriteFile(variation, paramNameFileQuery, numberSubNameImg);
+        System.out.println(paramNameFileQuery + " : " + numberSubNameImg);
     }
 }
