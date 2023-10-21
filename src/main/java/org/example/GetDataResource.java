@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 public class GetDataResource {
@@ -79,6 +78,9 @@ public class GetDataResource {
         while (j <= (valueAmountJson - 1)) {
             setJsonParsing(paramQuery, stringBuilder, j, "full");
             j++;
+            if (j == (valueAmountJson)) {
+                System.out.println("Thanks and I hope you always have a successful day :)\nFollow my IG acc '@herdiii_99'");
+            }
         }
         return 0;
     }
@@ -86,15 +88,16 @@ public class GetDataResource {
     private void setWriteFile(String paramUrlImage, String paramNameImage, int paramNumberSubNameFile) {
         try {
             url = new URL(paramUrlImage);
-            String namaFile = "/home/mpuss/Pictures/gajah/" + paramNameImage + "-" + paramNumberSubNameFile + ".jpg";
+            String currentDirectory = System.getProperty("user.dir");
+            String nameFile = currentDirectory +"/"+ paramNameImage + "-" + paramNumberSubNameFile + ".jpg";
             try (InputStream in = new BufferedInputStream(url.openStream());
-                 FileOutputStream fos = new FileOutputStream(namaFile)) {
+                 FileOutputStream fos = new FileOutputStream(nameFile)) {
                 byte[] buffer = new byte[1024];
                 int bytesRead;
                 while ((bytesRead = in.read(buffer, 0, 1024)) != -1) {
                     fos.write(buffer, 0, bytesRead);
                 }
-                System.out.println("File finish to save " + namaFile);
+                System.out.println("File finish to save " + nameFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }

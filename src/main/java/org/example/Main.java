@@ -9,6 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
         if (args.length >= 4 && (args[0].equals("-n") || args[0].equals("--normal"))) {
+            //args length greater than 4 and length 1 start on 0,1,2,3 (total 4 length)
+            //array start with number value 0
+            // (args[0].equals("-n") || args[0].equals("--normal")) this code wrapped by () for reduce ambiguity
             query = String.valueOf(args[1]);
             amount = Integer.valueOf(args[2]);
             numberPage = String.valueOf(args[3]);
