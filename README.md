@@ -1,27 +1,116 @@
-# bajing-locant
-"bajing-loncat" is a program that allows users to quickly retrieve legal or illegal data, such as a bajing-loncat (check on Wikipedia) in stealing valuables. With a simple command line interface, the program offers high efficiency in data retrieval.
-install it first :
-pacman -S jdk-openjdk (based arch)
-apt install jdk-openjdk (based debian)
+# bajing-loncat 🐿️
 
-https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.exe (based windows)
+Unsplash Image Downloader - Download gambar random dari Unsplash secara otomatis.
 
-next step :
+## Instalasi
+
+### Prerequisites
+
+- Java 17 atau lebih tinggi
+- Python 3 dengan library `requests`
+- Firefox (untuk cookie)
+
+### Install Java
+
+```bash
+# Arch Linux
+pacman -S jdk-openjdk
+
+# Debian/Ubuntu
+apt install openjdk-17-jdk
+
+# Windows
+# Download dari: https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.exe
+```
+
+### Install Python requests
+
+```bash
+pip3 install requests
+```
+
+### Build
+
+```bash
 git clone https://github.com/mpuss37/bajing-loncat.git
-&& cd bajing-loncat/gradlew jar
-check dir build/libs/file.jar
-and running with this command
-java -jar filename.jar [argument]
-Congratulations, the program has been installed
+cd bajing-loncat
+./gradlew jar
+```
 
-Usage:
- balon [OPTIONS]...[VALUES]	
-  -n, --normal ['query'] [amount] [numberPage]    Normal data fetch.
-  -f, --free   ['query'] [amount] [numberPage]     Free data fetch.
-  -o, --orient ['query'] [amount] [numberPage] [orientation]    Specific orientation data fetch.
-  -c, --color  ['query'] [amount] [numberPage] [color]    Specific color data fetch.
-  -r, --order  ['query'] [amount] [numberPage] [order]    Specific order data fetch.
-  -a, --all    ['query'] [amount] [numberPage] [color] [order]    Perfect criteria data fetch.
-  -h, --help    Display usage,options and help.
-Example :
-soon
+File JAR akan ada di `build/libs/bajing-loncat.jar`
+
+## Cara Pakai
+
+```bash
+# Download 10 gambar random
+java -jar build/libs/bajing-loncat.jar 10
+
+# Download 50 gambar random
+java -jar build/libs/bajing-loncat.jar 50
+
+# Tampilkan bantuan
+java -jar build/libs/bajing-loncat.jar -h
+```
+
+### Output
+
+```
+🔍 Mencari 10 gambar random dari Unsplash...
+
+  📡 Fetching dari Unsplash...
+    Page 1: 30 foto (total: 30)
+    Page 2: 30 foto (total: 60)
+
+✅ Ditemukan 10 gambar
+📁 Download ke: /home/user/bajing-loncat/downloads
+
+📥 [1/10] photo_001.jpg ✅
+📥 [2/10] photo_002.jpg ✅
+📥 [3/10] photo_003.jpg ✅
+...
+
+═══════════════════════════════════════
+✅ Selesai!
+   Berhasil: 10
+   Folder: /home/user/bajing-loncat/downloads
+═══════════════════════════════════════
+```
+
+### Struktur Folder
+
+```
+bajing-loncat/
+├── downloads/
+│   ├── photo_001.jpg
+│   ├── photo_002.jpg
+│   └── ...
+├── build/
+│   └── libs/
+│       └── bajing-loncat.jar
+└── src/
+    └── main/
+        └── java/
+            └── com/
+                └── bajingloncat/
+                    ├── Main.java
+                    ├── cli/
+                    ├── config/
+                    ├── dto/
+                    ├── exception/
+                    ├── model/
+                    ├── repository/
+                    ├── security/
+                    ├── service/
+                    └── util/
+```
+
+## Catatan
+
+- Firefox harus pernah visit unsplash.com (untuk cookie)
+- Gambar didownload dalam format JPG full resolution
+- Cookie di-cache di `/tmp/unsplash_cookie.txt`
+- Cookie otomatis di-refresh jika expired
+
+## Lisensi
+
+MIT
